@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+
+    position: absolute;
+    right: 10px;
+
+    width: 100px;
+    height: 50px;
+}
+
+.fav {
+    cursor: pointer;
+}

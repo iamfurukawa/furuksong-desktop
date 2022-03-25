@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import Filter from '../components/filter'
+import Header from '../components/header'
 
-const fs = window.require('fs')
+import Audios from '../components/audios'
+import Menu from '../components/menu'
 
+import 'antd/dist/antd.min.css'
+//const fs = window.require('fs')
 
 const App = () => {
   const [deviceSelected, setDeviceSelected] = useState('default')
@@ -17,7 +22,7 @@ const App = () => {
   }, [])
 
   const play = async () => {
-    console.log(`Try play on ${JSON.stringify(deviceSelected)}`)
+    console.log(`Device selected: ${JSON.stringify(deviceSelected)}`)
     const player = new Audio('C:\\Users\\vinicius.carvalho\\Documents\\projects\\soundboard\\furuksong-desktop\\NANI.mp3')
     try {
       console.log('Configurando sinkId')
@@ -33,14 +38,20 @@ const App = () => {
   }
 
   return (
-    <div>
-      <select name="devices" id="devices-select" onChange={(evt) => setDeviceSelected(evt.target.value)}>
-        {
-          devices.map((device) => <option value={device.deviceId}>[{device.kind}] {device.label}</option>)
-        }
-      </select>
-      <button onClick={play}>Play!</button>
-    </div>
+    <>
+      <Menu />
+      <Header />
+      <Filter />
+      <Audios />
+    </>
+    // <div>
+    //   <select name="devices" id="devices-select" onChange={(evt) => setDeviceSelected(evt.target.value)}>
+    //     {
+    //       devices.map((device) => <option value={device.deviceId}>[{device.kind}] {device.label}</option>)
+    //     }
+    //   </select>
+    //   <button onClick={play}>Play!</button>
+    // </div>
   )
 }
 

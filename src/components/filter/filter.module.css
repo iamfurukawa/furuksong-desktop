@@ -1,0 +1,8 @@
+.content {
+    display: flex;
+}
+
+.tags {
+    margin-left: 10px !important;
+    width: 350px;
+}
