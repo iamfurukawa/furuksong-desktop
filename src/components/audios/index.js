@@ -1,41 +1,16 @@
 import React from 'react'
-import Audio from '../audio'
+import AudioCard from '../audio-card'
 
 import styles from './audios.module.css'
 
-const Audios = () => {
+const Audios = ({ sounds = [] }) => {
     return (
         <div className={styles.content}>
-            <Audio /><Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio /><Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
-            <Audio />
+            {
+                sounds.map(file => <AudioCard key={file} name={file} />)
+            }
         </div>
     )
 }
-
+//
 export default Audios

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import Filter from '../components/filter'
 import Header from '../components/header'
 
@@ -6,55 +7,59 @@ import Audios from '../components/audios'
 import Menu from '../components/menu'
 
 import 'antd/dist/antd.min.css'
-//const fs = window.require('fs')
+
+const fs = window.require('fs')
 
 const App = () => {
-  const [deviceSelected, setDeviceSelected] = useState('default')
-  const [devices, setDevices] = useState([])
+
+  const [filter, setFilter] = useState('Todos')
+  const [search, setSearch] = useState('')
+  const [sounds, setSounds] = useState(JSON.parse(localStorage.getItem('sounds')) || [])
 
   useEffect(() => {
-    navigator.mediaDevices.enumerateDevices()
-      .then(devicesRetrieved => {
-        setDeviceSelected(devicesRetrieved[0].deviceId)
-        setDevices(devicesRetrieved)
-      })
-      .catch(error => console.error(`Error on get devices: ${error}`))
+    try {
+      const audios = fs.readdirSync(localStorage.getItem('path'))
+        .filter(file => file.endsWith('.mp3'))
+
+      localStorage.setItem('sounds', JSON.stringify(audios))
+      console.log('Audios updated')
+    } catch (e) {
+      console.log('Audios não atualizados')
+    }
   }, [])
 
-  const play = async () => {
-    console.log(`Device selected: ${JSON.stringify(deviceSelected)}`)
-    const player = new Audio('C:\\Users\\vinicius.carvalho\\Documents\\projects\\soundboard\\furuksong-desktop\\NANI.mp3')
-    try {
-      console.log('Configurando sinkId')
-      await player.setSinkId(deviceSelected)
-    } catch (e) {
-      console.log(`Erro na configuração de sinkId: ${e}`)
+  useEffect(() => {
+
+    const getTag = (audio) => {
+      let audioSplitted = audio.replaceAll('[', '').split(']')
+      audioSplitted.pop()
+      return audioSplitted
     }
 
-    console.log('Play audio')
-    player
-      .play()
-      .catch((e) => console.log(`Erro ao reproduzir som : ${e}`))
-  }
+    const containsSearch = (sound) => sound.replaceAll('.mp3', '').toLowerCase().includes(search.toLowerCase())
+
+    const containsTag = (sound) => getTag(sound).includes(filter)
+
+    const isTodos = () => filter === 'Todos'
+
+    let filtered = []
+
+    if (filter === 'Favoritos')
+      filtered = (JSON.parse(localStorage.getItem('favoritos')) || [])
+    else
+      filtered = (JSON.parse(localStorage.getItem('sounds')) || [])
+        .filter(sound => containsSearch(sound) && (isTodos() || containsTag(sound)))
+    setSounds(filtered)
+  }, [filter, search])
 
   return (
     <>
       <Menu />
       <Header />
-      <Filter />
-      <Audios />
+      <Filter handleChange={setFilter} valueSelect={filter} handleSearch={setSearch} valueSearch={search} />
+      <Audios sounds={sounds} />
     </>
-    // <div>
-    //   <select name="devices" id="devices-select" onChange={(evt) => setDeviceSelected(evt.target.value)}>
-    //     {
-    //       devices.map((device) => <option value={device.deviceId}>[{device.kind}] {device.label}</option>)
-    //     }
-    //   </select>
-    //   <button onClick={play}>Play!</button>
-    // </div>
   )
 }
 
 export default App
-
-//fs.readdirSync('.').map(file => <div>{file}</div>)

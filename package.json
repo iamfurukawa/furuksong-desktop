@@ -17,6 +17,11 @@
       "buildResources": "assets"
     }
   },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
@@ -26,7 +31,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.19.3",
     "electron-is-dev": "^2.0.0",
-    "fs": "^0.0.1-security",
+    "lodash": "^4.17.21",
     "path": "^0.12.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -38,7 +43,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "release": "react-scripts build && electron-builder --publish=always",
+    "release": "react-scripts build && electron-builder --win --publish never",
     "ebuild": "npm run build && node_modules/.bin/build",
     "electron": "wait-on http-get://127.0.0.1:3000 && electron .",
     "dev": "run-p start electron"
