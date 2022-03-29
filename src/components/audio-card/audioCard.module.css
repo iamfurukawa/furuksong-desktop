@@ -1,0 +1,59 @@
+.card {
+    display: flex;
+    flex-direction: column;
+
+    width: 195px;
+    height: 250px;
+    background-color: #404040;
+}
+
+.audioName {
+    margin-top: 25px;
+    color: #c4c4c4;
+    font-family: Montserrat,sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    padding-top: 20px;
+
+    width: 100%;
+    height: 65%;
+
+    cursor: pointer;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 100%;
+    height: 35%;
+
+    padding: 10px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    color: yellow;
+    margin-left: 15px;
+    height: 100%;
+}
+
+.tag {
+   margin-bottom: 10px;
+   max-height: 23px;
+}
+
+.fav {
+    cursor: pointer;
+}
